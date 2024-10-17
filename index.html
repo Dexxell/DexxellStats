@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube OAuth Redirect</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #fff;
+            text-align: center;
+            padding-top: 100px;
+        }
+
+        .google-signin-btn {
+            background-color: #00b0ff;
+            border: none;
+            color: white;
+            padding: 15px 30px;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .google-signin-btn:hover {
+            background-color: #0099e6;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Sign in with Google</h1>
+    <button class="google-signin-btn" onclick="openOAuthPopup()">Sign in with Google</button>
+
+    <script>
+        function openOAuthPopup() {
+            const oauthUrl = 'https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount?gsiwebsdk=3&client_id=928183395842-ig3govj9ifu752sb956mp3kbecivb8a3.apps.googleusercontent.com&scope=openid%20profile%20email%20email%20profile%20openid&redirect_uri=https://dexxell.github.io/DexxellStats&prompt=select_account&response_type=token&include_granted_scopes=true&enable_granular_consent=true&service=lso&o2v=2&ddm=0&flowName=GeneralOAuthFlow';
+
+            // Open a small popup window (width: 500px, height: 600px)
+            const width = 500;
+            const height = 600;
+            const left = (screen.width - width) / 2;
+            const top = (screen.height - height) / 2;
+
+            const popup = window.open(
+                oauthUrl, 
+                'GoogleOAuth', 
+                `width=${width},height=${height},top=${top},left=${left},resizable=yes,scrollbars=yes`
+            );
+
+            // Monitor the popup for OAuth redirect and close it once completed
+            const popupInterval = setInterval(() => {
+                if (popup.closed) {
+                    clearInterval(popupInterval);
+                    alert('Authentication complete! Redirecting...');
+                    window.location.href = 'https://dexxell.github.io/DexxellStats';
+                }
+            }, 500);
+        }
+    </script>
+
+</body>
+</html>
+
+
